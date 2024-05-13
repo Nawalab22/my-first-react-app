@@ -1,23 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+// App.js
+
+import React, { useState } from "react";
+import "./App.css";
 
 function App() {
+  const [name, setName] = useState("");
+  const [age, setAge] = useState("");
+  const [registeredStudents, setRegisteredStudents] = useState([]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newStudent = {
+      name: name,
+      age: age,
+    };
+    setRegisteredStudents([...registeredStudents, newStudent]);
+    setName("");
+    setAge("");
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Register Students</h1>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="name">Name:</label>
+        <input
+          type="text"
+          id="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <label htmlFor="age">Age:</label>
+        <input
+          type="text"
+          id="age"
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
+        />
+        <button type="submit">Register</button>
+      </form>
+      <h2>Registered Students:</h2>
+      <ul>
+        {registeredStudents.map((student, index) => (
+          <li key={index}>
+            <strong>{student.name}</strong> - Age: {student.age}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
